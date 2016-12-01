@@ -5,10 +5,6 @@ white=(255,255,255)
 gray=(105,105,105)
 red=(255,0,0)
 darkred=(155,0,0)
-brown=(139,69,19)
-blue=(0,0,200)
-yellow=(200,200,0)
-green=(34,177,76)
 
 pygame.init()
 
@@ -114,24 +110,33 @@ menu_But=[Button((170,250,button_width,button_height),black,darkred,"PLAY", "Pla
              Button((170,350,button_width,button_height),black,darkred,"HELP", "Help"),
              Button((170,400,button_width,button_height),black,darkred,"QUIT", "Quit")]
 
-help_But=[Button((170,400,button_width,button_height),black,darkred,"BACK", "Back"),
-             Button((570,400,button_width,button_height),black,darkred,"QUIT", "Quit")]
+help_But=[Button((100,450,button_width,button_height),black,darkred,"BACK", "Back"),
+             Button((250,450,button_width,button_height),black,darkred,"QUIT", "Quit")]
 
 character_But=[Button((70,350,button_width,button_height),black,darkred,"Human", "Human"),
              Button((190,350,button_width,button_height),black,darkred,"Elf", "Elf")]
 
 name_But=[Button((80,230,button_width,button_height),black,darkred,"name", "Play"),
-          Button((100,300,button_width+50,button_height),black,darkred,"START GAME", "Play")]
+          Button((100,300,button_width+100,button_height),black,darkred,"START GAME", "Play")]
 
-action_But=[Button((90,390,button_width+5,button_height),black,darkred,"Adventure", "Adventure"),
+action_But=[Button((90,390,button_width+5,button_height),black,darkred,"Explore", "Explore"),
              Button((350,390,button_width+5,button_height),black,darkred,"Craft", "Craft"),
              Button((600,390,button_width+5,button_height),black,darkred,"Village", "Village"),
              Button((280,490,button_width+5,button_height),black,darkred,"SAVE", "Save"),
              Button((420,490,button_width+5,button_height),black,darkred,"QUIT", "Quit")]
 
-adventure_But=[Button((280,300,button_width+100,button_height),black,darkred,"Back to main menu", "Back")]
-             #Button(100,300,button_width,button_height,black,darkred,"START GAME", "Play")]
+explore_But=[Button((50, 500, button_width, button_height), black, darkred, "Lvl 1", "mon1"),
+             Button((175,500,button_width,button_height),black,darkred,"Lvl 2", "mon2"),
+             Button((300,500,button_width,button_height),black,darkred,"Lvl 3", "mon2"),
+             Button((425,500,button_width,button_height),black,darkred,"Lvl 4", "mon2"),
+             Button((550,500,button_width,button_height),black,darkred,"Lvl 5", "mon2"),
+             Button((675,500,button_width,button_height),black,darkred,"Back", "Back")]
 
+mon1=False
+mon2=False
+mon3=False
+mon4=False
+mon5=False
 
 player=""
 tase="mainmenu"
@@ -176,36 +181,49 @@ while game_begin:
 
             elif tase=="actionmenu":
                 result=handle_buttons(action_But,event)
-                if result=="Adventure":
-                    tase="adventure"
+                if result=="Explore":
+                    tase="explore"
                 elif result=="Craft":
-                    tase="adventure"
+                    tase="explore"
                 elif result=="Village":
-                    tase="adventure"
+                    tase="explore"
                 elif result=="Save":
                     pass
                 elif result=="Quit":
                     game_begin=False
 
-            elif tase=="adventure":
-                result=handle_buttons(adventure_But,event)
+            elif tase=="explore":
+                result=handle_buttons(explore_But, event)
                 if result=="Back":
-                    tase="mainmenu"
+                    tase="actionmenu"
+                elif result=="mon1":
+                    pilt="mon1"
+                    tase="combat"
+                elif result=="mon2":
+                    pilt="mon1"
+                    tase="combat"
+                elif result=="mon3":
+                    pilt="mon1"
+                    tase="combat"
+                elif result=="mon4":
+                    pilt="mon1"
+                    tase="combat"
+                elif result=="mon5":
+                    pilt="mon1"
+                    tase="combat"
+
 
     #DISPLAY
 
     if tase=="mainmenu":
         Screen.blit(introtaust,(0,0))
-        teksti_pilt=font1.render("KREMARTY", False, black)
-        Screen.blit(teksti_pilt,(65,30))
+        message_to_screen("KREMARTY", black, -200,"large")
         draw_buttons(menu_But)
 
     elif tase=="help":
         Screen.blit(introtaust,(0,0))
-        teksti_pilt=font2.render("Instructions",False,black)
-        Screen.blit(teksti_pilt,(60,60))
-        teksti_pilt=font3.render("Here will be some instructions.",False,black)
-        Screen.blit(teksti_pilt,(60,120))
+        message_to_screen("Instructions",black,-200,"medium","white",-200)
+        message_to_screen("Here will be some instructions.",black,-150,"small","white",-160)
         draw_buttons(help_But)
 
     elif tase=="choose_race":
@@ -229,11 +247,21 @@ while game_begin:
         Screen.blit(townicon,(600,270))
         draw_buttons(action_But)
 
-    elif tase=="adventure":
+    elif tase=="explore":
         Screen.fill(white)
         teksti_pilt=font2.render("[under construction]",False,black)
-        Screen.blit(teksti_pilt,(150,150))
-        draw_buttons(adventure_But)
+        Screen.blit(teksti_pilt,(150,100))
+        if mon1==False:
+            Screen.blit(player,(50,300))
+        elif mon2==False:
+            Screen.blit(player,(200,300))
+        elif mon3==False:
+            Screen.blit(player,(350,300))
+        elif mon4==False:
+            Screen.blit(player,(500,300))
+        elif mon5==False:
+            Screen.blit(player,(650,300))
+        draw_buttons(explore_But)
 
     pygame.display.update() #update'ib eelnevat
 
